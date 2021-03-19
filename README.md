@@ -19,5 +19,5 @@
 
 ## Commands
 
-- `Make` - start the dev server
+- `make` - start the dev server
 - `make test` - run test suite
