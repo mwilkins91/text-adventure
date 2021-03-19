@@ -16,7 +16,7 @@ textarea {
   font-size: 1.5rem;
 }
 
-#output {
+#output-display {
   border: 6px ridge grey;
   flex: 70%;
   height: 70vh;

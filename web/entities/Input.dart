@@ -1,29 +1,5 @@
 import 'dart:html';
-
-class Element_Not_Found_Exception extends Error {
-  String id;
-  Element_Not_Found_Exception(this.id);
-
-  @override
-  String toString() {
-    if (id != null) {
-      return 'Element $id not found!';
-    }
-    return 'No id found!';
-  }
-}
-
-class Wrong_Element_Exception extends Error {
-  String id;
-  String expected;
-  String actual;
-  Wrong_Element_Exception(this.id, this.expected, this.actual);
-
-  @override
-  String toString() {
-    return 'Element $id not of type $expected, found $actual instead!';
-  }
-}
+import '../Exceptions//Element_Query.dart';
 
 var REG_EXP_VALID_CHAR = RegExp(r'([a-zA-Z]|\s|[.,!?\\-])');
 
@@ -38,7 +14,7 @@ class Input {
     _display = querySelector(_displayID);
 
     _verifyHtmlIsCorrect();
-    _createChildHtml();
+    _setChildHtml();
     _registerChildElements();
     _attachBaseEventListeners();
   }
@@ -49,10 +25,15 @@ class Input {
     }
   }
 
-  void _createChildHtml() {
-    _display.appendHtml('''
+  void _setChildHtml() {
+    _display.innerHtml = '''
       <span id="terminal-prompt">&#65310;</span><span id="terminal-caret"></span>
-    ''');
+    ''';
+  }
+
+  void clear() {
+    _setChildHtml();
+    _registerChildElements();
   }
 
   void _registerChildElements() {
@@ -156,6 +137,6 @@ class Input {
   }
 
   String read() {
-    return _display.text;
+    return _display.text.replaceAll('＞', '').trim();
   }
 }
