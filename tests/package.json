@@ -1,0 +1,18 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "$(npm bin)/cypress open",
+    "start-server": "cd .. && webdev serve",
+    "ci": "start-server-and-test start-server http://localhost:8080 test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^6.8.0",
+    "start-server-and-test": "^1.12.0"
+  }
+}
