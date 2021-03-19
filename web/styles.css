@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body,
+input,
+textarea {
+  font-family: "VT323", monospace;
+  background: black;
+  color: lime;
+  font-size: 1.5rem;
+}
+
+#output {
+  border: 6px ridge grey;
+  flex: 70%;
+  height: 70vh;
+}
+
+#input-display {
+  border: 6px ridge grey;
+  height: 30vh;
+  width: 100%;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+#details {
+  border: 6px ridge grey;
+  height: 100vh;
+  flex: 30%;
+}
+
+.horizontal-wrapper {
+  display: flex;
+  width: 100vw;
+}
+
+.vertical-wrapper {
+  flex: 70%;
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#terminal-prompt {
+  font-size: 13px;
+}
+
+#terminal-caret {
+  animation: blink 1s;
+  animation-iteration-count: infinite;
+}
