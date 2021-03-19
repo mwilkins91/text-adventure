@@ -28,45 +28,46 @@ class Wrong_Element_Exception extends Error {
 var REG_EXP_VALID_CHAR = RegExp(r'([a-zA-Z]|\s|[.,!?\\-])');
 
 class Input {
-  String inputID;
-  String displayID;
-  Element display;
-  SpanElement prompt;
-  SpanElement caret;
+  final String _inputID;
+  final String _displayID;
+  Element _display;
+  SpanElement _prompt;
+  SpanElement _caret;
+  final List<Function> _handlers = [];
 
-  Input(this.inputID, this.displayID) {
-    display = querySelector(displayID);
+  Input(this._inputID, this._displayID) {
+    _display = querySelector(_displayID);
 
-    if (display == null) {
-      throw Element_Not_Found_Exception(displayID);
+    if (_display == null) {
+      throw Element_Not_Found_Exception(_displayID);
     }
 
-    display.appendHtml('''
+    _display.appendHtml('''
       <span id="terminal-prompt">&#65310;</span><span id="terminal-caret"></span>
     ''');
 
-    prompt = display.querySelector('#terminal-prompt');
-    caret = display.querySelector('#terminal-caret');
+    _prompt = _display.querySelector('#terminal-prompt');
+    _caret = _display.querySelector('#terminal-caret');
 
-    display.addEventListener(
-        'focus', (event) => display.classes.add('focused'));
+    _display.addEventListener(
+        'focus', (event) => _display.classes.add('focused'));
 
-    display.addEventListener(
-        'blur', (event) => display.classes.remove('focused'));
+    _display.addEventListener(
+        'blur', (event) => _display.classes.remove('focused'));
 
-    display.addEventListener('keydown', (event) {
+    _display.addEventListener('keydown', (event) {
       var e = event as KeyboardEvent;
 
       var isBackspace = e.keyCode == 8;
-      var isPreviousNodeTextNode = caret.previousNode.nodeType == 3;
-      var isNextNodeTextNode = caret.nextNode?.nodeType == 3;
+      var isPreviousNodeTextNode = _caret.previousNode.nodeType == 3;
+      var isNextNodeTextNode = _caret.nextNode?.nodeType == 3;
       var canBeBackspaced = isBackspace && isPreviousNodeTextNode;
       if (canBeBackspaced) {
-        caret.previousNode.remove();
+        _caret.previousNode.remove();
         return;
       }
 
-      var isMaxLength = display.text.length >= 300;
+      var isMaxLength = _display.text.length >= 300;
       if (isMaxLength) return;
 
       var isValidCharacter =
@@ -74,39 +75,52 @@ class Input {
               REG_EXP_VALID_CHAR.hasMatch(e.key);
 
       if (isValidCharacter && e.key.length == 1) {
-        display.insertBefore(Text(e.key), caret);
+        _display.insertBefore(Text(e.key), _caret);
         return;
       }
 
       var isLeftArrow = e.keyCode == 37;
       var isRightArrow = e.keyCode == 39;
 
-      var previousCharacter = caret.previousNode?.clone(false);
-      var selectedCharacter = caret.firstChild?.clone(false);
-      var nextCharacter = caret.nextNode?.clone(false);
+      var previousCharacter = _caret.previousNode?.clone(false);
+      var selectedCharacter = _caret.firstChild?.clone(false);
+      var nextCharacter = _caret.nextNode?.clone(false);
       if (isLeftArrow && isPreviousNodeTextNode) {
-        caret.previousNode?.remove();
-        caret.firstChild?.remove();
+        _caret.previousNode?.remove();
+        _caret.firstChild?.remove();
         if (selectedCharacter != null) {
-          display.insertBefore(selectedCharacter, caret.nextNode);
+          _display.insertBefore(selectedCharacter, _caret.nextNode);
         }
-        caret.append(previousCharacter);
+        _caret.append(previousCharacter);
         return;
       }
 
       if (isRightArrow && isNextNodeTextNode) {
-        caret.nextNode?.remove();
-        caret.firstChild?.remove();
+        _caret.nextNode?.remove();
+        _caret.firstChild?.remove();
         if (selectedCharacter != null) {
-          display.insertBefore(selectedCharacter, caret);
+          _display.insertBefore(selectedCharacter, _caret);
         }
-        caret.append(nextCharacter);
+        _caret.append(nextCharacter);
         return;
+      }
+
+      var isEnter = e.keyCode == 13;
+      if (isEnter) {
+        _handleSubmit();
       }
     });
   }
 
+  void _handleSubmit() {
+    _handlers.forEach((func) => func(read()));
+  }
+
+  void addSubmitHandler(Function handler) {
+    _handlers.add(handler);
+  }
+
   String read() {
-    return display.text;
+    return _display.text;
   }
 }
