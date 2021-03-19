@@ -42,7 +42,7 @@ class Input {
     }
 
     display.appendHtml('''
-      <span id="terminal-prompt">&#65310;</span><span id="terminal-caret">&#95;</span>
+      <span id="terminal-prompt">&#65310;</span><span id="terminal-caret"></span>
     ''');
 
     prompt = display.querySelector('#terminal-prompt');
@@ -58,8 +58,9 @@ class Input {
       var e = event as KeyboardEvent;
 
       var isBackspace = e.keyCode == 8;
-      var isTextNode = caret.previousNode.nodeType == 3;
-      var canBeBackspaced = isBackspace && isTextNode;
+      var isPreviousNodeTextNode = caret.previousNode.nodeType == 3;
+      var isNextNodeTextNode = caret.nextNode?.nodeType == 3;
+      var canBeBackspaced = isBackspace && isPreviousNodeTextNode;
       if (canBeBackspaced) {
         caret.previousNode.remove();
         return;
@@ -74,6 +75,32 @@ class Input {
 
       if (isValidCharacter && e.key.length == 1) {
         display.insertBefore(Text(e.key), caret);
+        return;
+      }
+
+      var isLeftArrow = e.keyCode == 37;
+      var isRightArrow = e.keyCode == 39;
+
+      var previousCharacter = caret.previousNode?.clone(false);
+      var selectedCharacter = caret.firstChild?.clone(false);
+      var nextCharacter = caret.nextNode?.clone(false);
+      if (isLeftArrow && isPreviousNodeTextNode) {
+        caret.previousNode?.remove();
+        caret.firstChild?.remove();
+        if (selectedCharacter != null) {
+          display.insertBefore(selectedCharacter, caret.nextNode);
+        }
+        caret.append(previousCharacter);
+        return;
+      }
+
+      if (isRightArrow && isNextNodeTextNode) {
+        caret.nextNode?.remove();
+        caret.firstChild?.remove();
+        if (selectedCharacter != null) {
+          display.insertBefore(selectedCharacter, caret);
+        }
+        caret.append(nextCharacter);
         return;
       }
     });
