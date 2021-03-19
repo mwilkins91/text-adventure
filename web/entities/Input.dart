@@ -28,14 +28,13 @@ class Wrong_Element_Exception extends Error {
 var REG_EXP_VALID_CHAR = RegExp(r'([a-zA-Z]|\s|[.,!?\\-])');
 
 class Input {
-  final String _inputID;
   final String _displayID;
   Element _display;
   SpanElement _prompt;
   SpanElement _caret;
   final List<Function> _handlers = [];
 
-  Input(this._inputID, this._displayID) {
+  Input(this._displayID) {
     _display = querySelector(_displayID);
 
     _verifyHtmlIsCorrect();
