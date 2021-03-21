@@ -27,7 +27,7 @@ class Input {
 
   void _setChildHtml() {
     _display.innerHtml = '''
-      <span id="terminal-prompt">&#65310;</span><span id="terminal-caret"></span>
+      <span id="terminal-prompt">&#65310;</span><span id="terminal-caret" class="caret" ></span>
     ''';
   }
 
