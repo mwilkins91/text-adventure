@@ -1,13 +1,7 @@
 import 'dart:html';
 import '../Exceptions//Element_Query.dart';
+import '../utils.dart';
 import 'Character.dart';
-import 'dart:math';
-import 'dart:convert';
-
-class RawHtml implements NodeTreeSanitizer {
-  @override
-  void sanitizeTree(Node node) {}
-}
 
 class Output {
   final String _displayID;

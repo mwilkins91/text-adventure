@@ -21,7 +21,6 @@ textarea {
   flex: 70%;
   height: 70vh;
   overflow-y: auto;
-  background: #122d11;
   border-radius: 0;
 }
 
@@ -31,6 +30,7 @@ textarea {
   width: 100%;
   word-break: break-all;
   overflow: hidden;
+  background: black;
 }
 
 #details {
@@ -42,6 +42,11 @@ textarea {
 .horizontal-wrapper {
   display: flex;
   width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.horizontal-wrapper > * {
+  max-height: 100%;
 }
 
 .vertical-wrapper {
@@ -132,4 +137,27 @@ textarea {
   50% {
     border-color: lime;
   }
+}
+
+#map-frame {
+  height: 40vh;
+}
+
+#map {
+  height: 100%;
+  overflow: hidden;
+}
+
+#inventory-frame {
+  height: 59vh;
+}
+
+#inventory {
+  height: 100%;
+  padding: 5px;
+  background: black;
+}
+
+.grid-item {
+  border: 1px solid rgba(0, 255, 0, 0.1);
 }
