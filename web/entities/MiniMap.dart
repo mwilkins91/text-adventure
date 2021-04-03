@@ -71,6 +71,23 @@ class MiniMap {
     }
     player.dataset.update('isPlayersLocation', (value) => 'false');
     newLoc.dataset.update('isPlayersLocation', (value) => 'true');
+    recenterMap();
+  }
+
+  void recenterMap() {
+    var playerEle = getPlayer();
+    var minimapEl = querySelector('#rendered-mini-map');
+    var x = playerEle.dataset['x'];
+    var y = playerEle.dataset['y'];
+
+    minimapEl.style.setProperty('position', 'absolute');
+    // Forumla:
+    // xch == move X times the with of a character (-1px per border you have to pass) + 50% to center horizontally
+    // xch == move Y times the height of a character (-1px per border you have to pass) + 50% to center Vert
+    minimapEl.style
+        .setProperty('left', 'calc((-${x}ch - ${int.parse(x) * 2}px) + 50%)');
+    minimapEl.style
+        .setProperty('top', 'calc((-${y}em - ${int.parse(y) * 2}px) + 50%)');
   }
 
   void render() {
@@ -95,19 +112,7 @@ class MiniMap {
 
     _display.appendHtml('<pre id="rendered-mini-map">$griddedMap</pre>',
         treeSanitizer: RawHtml());
-    var startEle = getStartPosition();
-    var minimapEl = querySelector('#rendered-mini-map');
-    var x = startEle.dataset['x'];
-    var y = startEle.dataset['y'];
-
-    minimapEl.style.setProperty('position', 'absolute');
-    // Forumla:
-    // xch == move X times the with of a character (-1px per border you have to pass) + 50% to center horizontally
-    // xch == move Y times the height of a character (-1px per border you have to pass) + 50% to center Vert
-    minimapEl.style
-        .setProperty('left', 'calc((-${x}ch - ${int.parse(x) * 2}px) + 50%)');
-    minimapEl.style
-        .setProperty('top', 'calc((-${y}em - ${int.parse(y) * 2}px) + 50%)');
+    recenterMap();
 
     hasRendered = true;
     return;
