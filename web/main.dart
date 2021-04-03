@@ -14,8 +14,7 @@ void main() {
       portraitPath: '/assets/bob-char-portrait.png');
   var map = MiniMap('#map', 'level-1');
 
-  input.addSubmitHandler((text) => print(text));
-  input.addSubmitHandler((text) {
+  void handleMovement(String text) {
     try {
       if (text == 'left') {
         return map.movePlayer(Direction.left);
@@ -35,7 +34,9 @@ void main() {
       }
     }
     output.characterSpeaks(bob, text.trim());
-  });
+  }
+
+  input.addSubmitHandler(handleMovement);
   input.addSubmitHandler((text) => input.clear());
   map.render();
 }
