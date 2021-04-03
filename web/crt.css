@@ -187,7 +187,11 @@
   position: relative;
 }
 
-.crt-frame {
+.crt.with-frame {
+  margin: 30px;
+}
+
+.crt-background {
   background-color: transparent;
   /* border-radius: 2rem; */
   border: 1rem solid;
@@ -201,4 +205,12 @@
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.crt-frame {
+  border: 21px solid transparent;
+  border-image-source: url(/assets/bezel.png);
+  border-image-slice: 30 fill;
+  border-image-outset: 0;
+  background: #655b59;
 }
