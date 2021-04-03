@@ -17,9 +17,12 @@ textarea {
 }
 
 #output-display {
-  border: 6px ridge grey;
+  /* border: 6px ridge grey; */
   flex: 70%;
   height: 70vh;
+  overflow-y: auto;
+  background: #122d11;
+  border-radius: 0;
 }
 
 #input-display {
@@ -76,6 +79,7 @@ textarea {
 .character-speech-box {
   border: 2px solid lime;
   padding: 20px;
+  margin: 30px;
 }
 
 .character-speech-box-content {
@@ -90,6 +94,8 @@ textarea {
 
 .character-speech-text {
   padding-top: 10px;
+  max-width: 80%;
+  overflow: hidden;
 }
 
 .typewriter {
@@ -98,6 +104,7 @@ textarea {
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   letter-spacing: 0.15em; /* Adjust as needed */
+  text-overflow: ellipsis;
   /* animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite; */
 }
 

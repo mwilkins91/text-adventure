@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="crt.css">
+  <link rel="stylesheet" href="scrollbar.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
   <script defer src="main.dart.js"></script>
@@ -20,8 +22,10 @@
 
   <div class="horizontal-wrapper">
     <div class="vertical-wrapper">
-      <div id="output-display"></div>
-      <div id="input-display" tabindex="0"></div>
+      <div id="output-display" class="crt">
+        <div class="crt-frame"></div>
+      </div>
+      <div id="input-display" class="crt" tabindex="0"></div>
     </div>
     <div id="details"></div>
   </div>
