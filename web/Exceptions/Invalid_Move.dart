@@ -1,6 +1,7 @@
 class InvalidMove extends Error {
   String id;
-  InvalidMove(this.id);
+  String nextTile;
+  InvalidMove(this.id, this.nextTile);
 
   @override
   String toString() {

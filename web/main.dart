@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'Exceptions/Invalid_Move.dart';
+import 'entities/Action.dart';
 import 'entities/Input.dart';
 import 'entities/Output.dart';
 import 'entities/Character.dart';
@@ -14,7 +15,8 @@ void main() {
       portraitPath: '/assets/bob-char-portrait.png');
   var map = MiniMap('#map', 'level-1');
 
-  void handleMovement(String text) {
+  dynamic handleMovement(String text, previous) {
+    print('prev: $previous');
     try {
       if (text == 'left') {
         return map.movePlayer(Direction.left);
@@ -30,13 +32,19 @@ void main() {
       }
     } catch (err) {
       if (err is InvalidMove) {
-        return output.write('Invalid move!');
+        return output.write(
+            'Try as you might, you cannot pass the ${MiniMap.getNameForTile(err.nextTile)}.');
       }
     }
     output.characterSpeaks(bob, text.trim());
   }
 
+  Action parseAction(text, p) {
+    return Action(text);
+  }
+
+  input.addSubmitHandler(parseAction);
   input.addSubmitHandler(handleMovement);
-  input.addSubmitHandler((text) => input.clear());
+  input.addSubmitHandler((text, p) => input.clear());
   map.render();
 }

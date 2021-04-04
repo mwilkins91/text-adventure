@@ -3,6 +3,7 @@ import 'dart:html';
 import '../Exceptions/Element_Query.dart';
 import '../Exceptions/Invalid_Move.dart';
 import '../Exceptions/Missing_Map.dart';
+import '../Exceptions/UnknownTile.dart';
 import '../maps/maps.dart';
 import '../utils.dart';
 
@@ -45,7 +46,7 @@ class MiniMap {
     return querySelector('[data-x="$x"][data-y="$y"]');
   }
 
-  void movePlayer(Direction direction) {
+  String movePlayer(Direction direction) {
     var player = getPlayer();
     var x = int.parse(player.dataset['x']);
     var y = int.parse(player.dataset['y']);
@@ -67,11 +68,12 @@ class MiniMap {
 
     var newLoc = getMapLocation(newX, newY);
     if (newLoc.text == '|' || newLoc.text == '-') {
-      throw InvalidMove('$newX, $newY');
+      throw InvalidMove('$newX, $newY', newLoc.text);
     }
     player.dataset.update('isPlayersLocation', (value) => 'false');
     newLoc.dataset.update('isPlayersLocation', (value) => 'true');
     recenterMap();
+    return newLoc.text;
   }
 
   void recenterMap() {
@@ -119,5 +121,17 @@ class MiniMap {
 
     hasRendered = true;
     return;
+  }
+
+  static String getNameForTile(String char) {
+    if (char == '|' || char == '-') {
+      return 'Wall';
+    }
+
+    if (char == '~') {
+      return 'Water';
+    }
+
+    throw Unknown_Tile(char);
   }
 }

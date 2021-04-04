@@ -191,7 +191,7 @@ textarea {
   position: absolute;
   bottom: 100%;
   left: 100%;
-  width: calc(8ch + 15px);
+  width: calc(9ch + 15px);
   background: black;
   border: 1px solid lime;
   text-align: center;

@@ -129,7 +129,11 @@ class Input {
   }
 
   void _handleSubmit() {
-    _handlers.forEach((func) => func(read()));
+    var previousFuncResult = null;
+    _handlers.forEach((func) {
+      var result = func(read(), previousFuncResult);
+      previousFuncResult = result;
+    });
   }
 
   void addSubmitHandler(Function handler) {
