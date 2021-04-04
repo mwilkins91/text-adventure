@@ -22,6 +22,7 @@ textarea {
   height: 70vh;
   overflow-y: auto;
   border-radius: 0;
+  padding: 30px;
 }
 
 #input-display {
@@ -84,7 +85,7 @@ textarea {
 .character-speech-box {
   border: 2px solid lime;
   padding: 20px;
-  margin: 30px;
+  margin: 30px 0;
 }
 
 .character-speech-box-content {
@@ -166,6 +167,10 @@ textarea {
   position: relative;
 }
 
+[data-is-water="true"] {
+  color: #00adff;
+}
+
 [data-is-players-location="true"]:after {
   content: "\263B";
   position: absolute;
@@ -175,4 +180,19 @@ textarea {
   transform: translate(-50%, -50%);
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+}
+
+[data-is-players-location="true"][data-is-start="true"] {
+  position: relative;
+}
+
+[data-is-players-location="true"][data-is-start="true"]:before {
+  content: "\21D9 Player";
+  position: absolute;
+  bottom: 100%;
+  left: 100%;
+  width: calc(8ch + 15px);
+  background: black;
+  border: 1px solid lime;
+  text-align: center;
 }

@@ -90,6 +90,18 @@ class MiniMap {
         .setProperty('top', 'calc((-${y}em - ${int.parse(y) * 2}px) + 50%)');
   }
 
+  String parseMapTiles(entry) {
+    var y = entry.key;
+    String row = entry.value;
+    return row.split('').asMap().entries.map((e) {
+      var x = e.key;
+      var char = e.value;
+      var isStart = char.toLowerCase() == 's';
+      var isWater = char.toLowerCase() == '~';
+      return '<span class="grid-item" data-is-water="$isWater" data-is-players-location="$isStart" data-x="$x" data-y="$y" data-is-start="$isStart" >$char</span>';
+    }).join('');
+  }
+
   void render() {
     if (hasRendered) {
       return;
@@ -97,16 +109,7 @@ class MiniMap {
     var griddedMap = _mapJSON
         .asMap()
         .entries
-        .map((entry) {
-          var y = entry.key;
-          String row = entry.value;
-          return row.split('').asMap().entries.map((e) {
-            var x = e.key;
-            var char = e.value;
-            var isStart = char.toLowerCase() == 's';
-            return '<span class="grid-item" data-is-players-location="$isStart" data-x="$x" data-y="$y" data-is-start="$isStart" >$char</span>';
-          }).join('');
-        })
+        .map(parseMapTiles)
         .join('\n')
         .replaceAll('.', ' ');
 
