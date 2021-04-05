@@ -16,7 +16,6 @@ void main() {
   var map = MiniMap('#map', 'level-1');
 
   dynamic handleMovement(String text, previous) {
-    print('prev: $previous');
     try {
       if (text == 'left') {
         return map.movePlayer(Direction.left);
